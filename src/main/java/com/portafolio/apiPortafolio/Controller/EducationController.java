@@ -34,6 +34,7 @@ import com.portafolio.apiPortafolio.Model.StatusRuta; // modelo que sirve para e
 import com.portafolio.apiPortafolio.Model.EducationModel; //modelo de Education
 import com.portafolio.apiPortafolio.Service.IEducation; //
 import com.portafolio.apiPortafolio.Dto.EducationDto; //dto para utilizar el put de metodo Education
+import org.springframework.security.access.prepost.PreAuthorize;
 
 /**
  *
@@ -54,6 +55,7 @@ public class EducationController {
         return educations;
     }
     
+    @PreAuthorize("hasRole('ADMIN')") // con esto solo van poder ingresar esta ruta si esta logueado y tiene como rol "ADMIN"
     @PostMapping("/create") // creo una education
      public ResponseEntity<Object> createEducation(@Valid  @RequestBody EducationModel education , BindingResult bindingResult){
          if(bindingResult.hasErrors()){
@@ -63,6 +65,7 @@ public class EducationController {
          return new ResponseEntity<>(education, HttpStatus.OK);
      }
      
+     @PreAuthorize("hasRole('ADMIN')") // con esto solo van poder ingresar esta ruta si esta logueado y tiene como rol "ADMIN"
      @DeleteMapping("/deleted/{id}") // elemino una education
      public ResponseEntity<Object> deletedEducation(@PathVariable int id){
          EducationModel education = interEducation.findEducation(id);
@@ -75,6 +78,7 @@ public class EducationController {
          return new ResponseEntity<>(status , HttpStatus.OK);
      }
      
+     @PreAuthorize("hasRole('ADMIN')") // con esto solo van poder ingresar esta ruta si esta logueado y tiene como rol "ADMIN"
      @GetMapping("/{id}") // buscona una experience por su id
      public ResponseEntity<Object> getEducationById(@PathVariable int id){
          EducationModel education = interEducation.findEducation(id);
@@ -85,6 +89,7 @@ public class EducationController {
          return new ResponseEntity<>(education , HttpStatus.OK);
      }
      
+     @PreAuthorize("hasRole('ADMIN')") // con esto solo van poder ingresar esta ruta si esta logueado y tiene como rol "ADMIN"
      @PutMapping("/edit/{id}") // modifico una experience por su id
      public ResponseEntity<Object> editEducation( @PathVariable int id , @Valid  @RequestBody EducationDto educationDto, BindingResult bindingResult){
          EducationModel education = interEducation.findEducation(id);

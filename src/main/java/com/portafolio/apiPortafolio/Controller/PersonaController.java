@@ -31,6 +31,7 @@ import com.portafolio.apiPortafolio.Model.PersonaModel; //modelo crear la person
 import com.portafolio.apiPortafolio.Model.StatusRuta; //  // modelo que sirve para enviar un msg en formato json del estado de la ruta
 import com.portafolio.apiPortafolio.Service.IPersonaService;
 import com.portafolio.apiPortafolio.Dto.PersonaDto;//dto para utilizar el put de metodo persona
+import org.springframework.security.access.prepost.PreAuthorize;
 
 
 /**
@@ -51,12 +52,14 @@ public class PersonaController {
          return persons;
      }
      
+     @PreAuthorize("hasRole('ADMIN')") // con esto solo van poder ingresar esta ruta si esta logueado y tiene como rol "ADMIN"
      @PostMapping("/persona/create") // creo una persona
      public ResponseEntity<?> createPersona(@RequestBody PersonaModel person){
          interPersonaService.savePersona(person);
          return new ResponseEntity<>(person, HttpStatus.OK);
      }
      
+     @PreAuthorize("hasRole('ADMIN')") // con esto solo van poder ingresar esta ruta si esta logueado y tiene como rol "ADMIN"
      @DeleteMapping("/persona/deleted/{id}") // elemino una persona
      public ResponseEntity<?> deletedPerson(@PathVariable int id){
          PersonaModel person = interPersonaService.findPersona(id);
@@ -69,6 +72,7 @@ public class PersonaController {
          return new ResponseEntity<>(status , HttpStatus.OK);
      }
      
+     @PreAuthorize("hasRole('ADMIN')") // con esto solo van poder ingresar esta ruta si esta logueado y tiene como rol "ADMIN"
      @GetMapping("/persona/{id}") // buscona una persona por su id
      public ResponseEntity<Object> getPersonById(@PathVariable int id){
          PersonaModel person = interPersonaService.findPersona(id);
@@ -79,6 +83,7 @@ public class PersonaController {
          return new ResponseEntity<>(person , HttpStatus.OK);
      }
      
+     @PreAuthorize("hasRole('ADMIN')") // con esto solo van poder ingresar esta ruta si esta logueado y tiene como rol "ADMIN"
      @PutMapping("/persona/edit/{id}")// modifico una persona por su id
      public ResponseEntity<Object> editPerson(@PathVariable int id , @RequestBody PersonaDto personaDto){
          PersonaModel person = interPersonaService.findPersona(id);

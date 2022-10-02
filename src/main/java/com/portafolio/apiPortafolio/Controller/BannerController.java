@@ -30,6 +30,7 @@ import com.portafolio.apiPortafolio.Model.Banner; //modelo crear el banner
 import com.portafolio.apiPortafolio.Model.StatusRuta; //modelo que sirve para enviar un msg en formato json del estado de la ruta
 import com.portafolio.apiPortafolio.Service.IBanner;
 import com.portafolio.apiPortafolio.Dto.BannerDto; // dto para el put del banner
+import org.springframework.security.access.prepost.PreAuthorize;
 /**
  *
  * @author edgar
@@ -48,12 +49,14 @@ public class BannerController {
         return banners;
     }
     
+    @PreAuthorize("hasRole('ADMIN')") // con esto solo van poder ingresar esta ruta si esta logueado y tiene como rol "ADMIN"
     @PostMapping("banner/create")
     public ResponseEntity<Object>  createBanner(@RequestBody Banner banner){
         interBanner.saveBanner(banner);
         return  new ResponseEntity<>(new StatusRuta("banner creado") , HttpStatus.OK );
     }
     
+    @PreAuthorize("hasRole('ADMIN')") // con esto solo van poder ingresar esta ruta si esta logueado y tiene como rol "ADMIN"
     @DeleteMapping("/banner/deleted/{id}") // elemino un banner
      public ResponseEntity<?> deletedBanner(@PathVariable int id){
          Banner banner = interBanner.findBanner(id);
@@ -66,6 +69,7 @@ public class BannerController {
          return new ResponseEntity<>(status , HttpStatus.OK);
      }
      
+     @PreAuthorize("hasRole('ADMIN')") // con esto solo van poder ingresar esta ruta si esta logueado y tiene como rol "ADMIN"
      @GetMapping("/banner/{id}") // buscona un banner por su id
      public ResponseEntity<Object> getBannerById(@PathVariable int id){
          Banner banner = interBanner.findBanner(id);
@@ -76,6 +80,7 @@ public class BannerController {
          return new ResponseEntity<>(banner , HttpStatus.OK);
      }
      
+     @PreAuthorize("hasRole('ADMIN')") // con esto solo van poder ingresar esta ruta si esta logueado y tiene como rol "ADMIN"
      @PutMapping("/banner/edit/{id}")// modifico una persona por su id
      public ResponseEntity<Object> editBanner(@PathVariable int id , @RequestBody BannerDto bannerDto){
          Banner banner = interBanner.findBanner(id);

@@ -31,6 +31,7 @@ import com.portafolio.apiPortafolio.Model.ExperienceModel; //modelo de Experienc
 import com.portafolio.apiPortafolio.Model.StatusRuta; // modelo que sirve para enviar un msg en formato json del estado de la ruta
 import com.portafolio.apiPortafolio.Service.IExperience;
 import com.portafolio.apiPortafolio.Dto.ExperienceDto;//dto para utilizar el put de metodo Experience
+import org.springframework.security.access.prepost.PreAuthorize;
 
 /**
  *
@@ -50,12 +51,14 @@ public class ExperienceController {
         return experiences;
     }
     
+    @PreAuthorize("hasRole('ADMIN')") // con esto solo van poder ingresar esta ruta si esta logueado y tiene como rol "ADMIN"
     @PostMapping("/experience/create") // creo una experience
      public ResponseEntity<Object> createPersona(@RequestBody ExperienceModel experience){
          interExperience.saveExperience(experience);
          return new ResponseEntity<>(experience, HttpStatus.OK);
      }
      
+     @PreAuthorize("hasRole('ADMIN')") // con esto solo van poder ingresar esta ruta si esta logueado y tiene como rol "ADMIN"
      @DeleteMapping("/experience/deleted/{id}") // elemino una experience
      public ResponseEntity<?> deletedExperience(@PathVariable int id){
          ExperienceModel experience = interExperience.findExperience(id);
@@ -68,6 +71,7 @@ public class ExperienceController {
          return new ResponseEntity<>(status , HttpStatus.OK);
      }
      
+     @PreAuthorize("hasRole('ADMIN')") // con esto solo van poder ingresar esta ruta si esta logueado y tiene como rol "ADMIN"
      @GetMapping("/experience/{id}") // buscona una experience por su id
      public ResponseEntity<Object> getExperienceById(@PathVariable int id){
          ExperienceModel experience = interExperience.findExperience(id);
@@ -78,6 +82,7 @@ public class ExperienceController {
          return new ResponseEntity<>(experience , HttpStatus.OK);
      }
      
+     @PreAuthorize("hasRole('ADMIN')") // con esto solo van poder ingresar esta ruta si esta logueado y tiene como rol "ADMIN"
      @PutMapping("/experience/edit/{id}") // modifico una experience por su id
      public ResponseEntity<Object> editExperience(@PathVariable int id , @RequestBody ExperienceDto experienceDto){
          ExperienceModel experience = interExperience.findExperience(id);

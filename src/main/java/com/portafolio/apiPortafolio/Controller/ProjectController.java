@@ -35,6 +35,7 @@ import com.portafolio.apiPortafolio.Model.StatusRuta; // modelo que sirve para e
 import com.portafolio.apiPortafolio.Model.ProjectModel;
 import com.portafolio.apiPortafolio.Dto.ProjectDto; // //dto para utilizar el put de metodo Proyect
 import com.portafolio.apiPortafolio.Service.IProject;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 /**
  *
@@ -54,6 +55,7 @@ public class ProjectController {
         return proyect;
     }
 
+    @PreAuthorize("hasRole('ADMIN')") // con esto solo van poder ingresar esta ruta si esta logueado y tiene como rol "ADMIN"
     @PostMapping("/create") // creo un project
     public ResponseEntity<Object> createProject(@Valid @RequestBody ProjectModel proyect, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
@@ -62,7 +64,8 @@ public class ProjectController {
         interProyect.saveProject(proyect);
         return new ResponseEntity<>(proyect, HttpStatus.OK);
     }
-
+    
+    @PreAuthorize("hasRole('ADMIN')") // con esto solo van poder ingresar esta ruta si esta logueado y tiene como rol "ADMIN"
     @DeleteMapping("/deleted/{id}") // elemino un project
     public ResponseEntity<Object> deletedProject(@PathVariable int id) {
         ProjectModel proyect = interProyect.findProject(id);
@@ -75,6 +78,7 @@ public class ProjectController {
         return new ResponseEntity<>(status, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ADMIN')") // con esto solo van poder ingresar esta ruta si esta logueado y tiene como rol "ADMIN"
     @GetMapping("/{id}") // buscona un proyect por su id
     public ResponseEntity<Object> getProjectById(@PathVariable int id) {
         ProjectModel proyect = interProyect.findProject(id);
@@ -84,7 +88,8 @@ public class ProjectController {
         }
         return new ResponseEntity<>(proyect, HttpStatus.OK);
     }
-
+    
+    @PreAuthorize("hasRole('ADMIN')") // con esto solo van poder ingresar esta ruta si esta logueado y tiene como rol "ADMIN"
     @PutMapping("/edit/{id}") // modifico un Proyect por su id
     public ResponseEntity<Object> editProyect(@PathVariable int id, @Valid @RequestBody ProjectDto proyectDto, BindingResult bindingResult) {
         ProjectModel proyect = interProyect.findProject(id);

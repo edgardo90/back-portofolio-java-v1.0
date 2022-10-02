@@ -34,6 +34,7 @@ import com.portafolio.apiPortafolio.Model.StatusRuta; // modelo que sirve para e
 import com.portafolio.apiPortafolio.Model.SkillModel;
 import com.portafolio.apiPortafolio.Service.ISkill;
 import com.portafolio.apiPortafolio.Dto.SkillDto;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 
 /**
@@ -55,6 +56,7 @@ public class SkilllController {
         return skills;
     }
     
+    @PreAuthorize("hasRole('ADMIN')") // con esto solo van poder ingresar esta ruta si esta logueado y tiene como rol "ADMIN"
     @PostMapping("/create") // creo una skill
      public ResponseEntity<Object> createSkill(@Valid  @RequestBody SkillModel skill , BindingResult bindingResult){
          if(bindingResult.hasErrors()){
@@ -73,6 +75,7 @@ public class SkilllController {
          return new ResponseEntity<>(skill, HttpStatus.OK);
      }
      
+     @PreAuthorize("hasRole('ADMIN')") // con esto solo van poder ingresar esta ruta si esta logueado y tiene como rol "ADMIN"
      @DeleteMapping("/deleted/{id}") // elemino una skill
      public ResponseEntity<Object> deletedSkill(@PathVariable int id){
          SkillModel skill = interSkill.findSkill(id);
@@ -85,6 +88,7 @@ public class SkilllController {
          return new ResponseEntity<>(status , HttpStatus.OK);
      }
      
+     @PreAuthorize("hasRole('ADMIN')") // con esto solo van poder ingresar esta ruta si esta logueado y tiene como rol "ADMIN"
      @GetMapping("/{id}") // buscona un skill por su id
      public ResponseEntity<Object> getSkillById(@PathVariable int id){
          SkillModel skill = interSkill.findSkill(id);
@@ -95,6 +99,7 @@ public class SkilllController {
          return new ResponseEntity<>(skill , HttpStatus.OK);
      }
      
+     @PreAuthorize("hasRole('ADMIN')") // con esto solo van poder ingresar esta ruta si esta logueado y tiene como rol "ADMIN"
      @PutMapping("/edit/{id}") // modifico un skill por su id
      public ResponseEntity<Object> editSkill( @PathVariable int id , @Valid  @RequestBody SkillDto skillDto, BindingResult bindingResult){
          SkillModel skill = interSkill.findSkill(id);

@@ -30,6 +30,7 @@ import com.portafolio.apiPortafolio.Model.AboutModel;  //modelo del about
 import com.portafolio.apiPortafolio.Model.StatusRuta; //modelo que sirve para enviar un msg en formato json del estado de la ruta
 import com.portafolio.apiPortafolio.Service.IAbout;
 import com.portafolio.apiPortafolio.Dto.AboutDto; // // dto para el put del about
+import org.springframework.security.access.prepost.PreAuthorize;
 
 /**
  *
@@ -49,12 +50,14 @@ public class AboutController {
         return abouts;
     }
     
+    @PreAuthorize("hasRole('ADMIN')") // con esto solo van poder ingresar esta ruta si esta logueado y tiene como rol "ADMIN"
     @PostMapping("/about/create") // crea el about
     public ResponseEntity<Object> createAbout(@RequestBody AboutModel about ){
         interAbout.saveAbout(about);
         return new ResponseEntity<>(about , HttpStatus.OK);
     }
     
+    @PreAuthorize("hasRole('ADMIN')") // con esto solo van poder ingresar esta ruta si esta logueado y tiene como rol "ADMIN"
     @DeleteMapping("/about/deleted/{id}")// elemina un about por su id
     public  ResponseEntity<Object> deletedAbout(@PathVariable int id){
         AboutModel about = interAbout.findAbout(id);
@@ -65,6 +68,7 @@ public class AboutController {
         return new ResponseEntity<>(new StatusRuta("About eleminado con exito") , HttpStatus.OK );
     }
     
+    @PreAuthorize("hasRole('ADMIN')") // con esto solo van poder ingresar esta ruta si esta logueado y tiene como rol "ADMIN"
     @GetMapping("about/{id}")//traigo un about por su id
     public  ResponseEntity<Object> getAboutById(@PathVariable int id){
         AboutModel about = interAbout.findAbout(id);
@@ -74,6 +78,7 @@ public class AboutController {
         return new ResponseEntity<>(about , HttpStatus.OK);
     }
     
+    @PreAuthorize("hasRole('ADMIN')") // con esto solo van poder ingresar esta ruta si esta logueado y tiene como rol "ADMIN"
     @PutMapping("about/edit/{id}")//modifico un about por su id
     public ResponseEntity<Object> editBout(@PathVariable int id , @RequestBody AboutDto aboutDto){
         AboutModel about = interAbout.findAbout(id);
