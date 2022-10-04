@@ -102,7 +102,7 @@ public class EducationController {
          education.setInstitution(educationDto.getInstitution());
          education.setTitleName(educationDto.getTitleName());
          education.setStartDate(educationDto.getStartDate());
-         education.setEndDate(educationDto.getStartDate());
+         education.setEndDate(educationDto.getEndDate());
          education.setDescription(educationDto.getDescription());
          education.setCertificateLink(educationDto.getCertificateLink());
          education.setInstitutionLogo(educationDto.getInstitutionLogo());
