@@ -78,7 +78,7 @@ public class EducationController {
          return new ResponseEntity<>(status , HttpStatus.OK);
      }
      
-     @PreAuthorize("hasRole('ADMIN')") // con esto solo van poder ingresar esta ruta si esta logueado y tiene como rol "ADMIN"
+//     @PreAuthorize("hasRole('ADMIN')") // con esto solo van poder ingresar esta ruta si esta logueado y tiene como rol "ADMIN"
      @GetMapping("/{id}") // buscona una experience por su id
      public ResponseEntity<Object> getEducationById(@PathVariable int id){
          EducationModel education = interEducation.findEducation(id);
@@ -102,7 +102,7 @@ public class EducationController {
          education.setInstitution(educationDto.getInstitution());
          education.setTitleName(educationDto.getTitleName());
          education.setStartDate(educationDto.getStartDate());
-         education.setEndDate(educationDto.getEndDate());
+         education.setEndDate(educationDto.getStartDate());
          education.setDescription(educationDto.getDescription());
          education.setCertificateLink(educationDto.getCertificateLink());
          education.setInstitutionLogo(educationDto.getInstitutionLogo());
