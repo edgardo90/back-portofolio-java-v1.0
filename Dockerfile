@@ -11,4 +11,4 @@ COPY target/apiPortafolio-0.0.1-SNAPSHOT.jar app.jar
 ENV PORT=8080
 
 # Ejecuta el jar y respeta el puerto asignado por Render
-CMD ["sh", "-c", "java -jar app.jar --server.port=$PORT"]
+CMD ["sh", "-c", "java -Xmx350m -jar app.jar --server.port=$PORT"]
