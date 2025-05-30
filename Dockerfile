@@ -1,6 +1,9 @@
 # Usa una imagen ligera con Java 8
 FROM openjdk:8-jdk-alpine
 
+# Instalar curl
+RUN apk update && apk add curl
+
 # Directorio de trabajo dentro del contenedor
 WORKDIR /app
 
